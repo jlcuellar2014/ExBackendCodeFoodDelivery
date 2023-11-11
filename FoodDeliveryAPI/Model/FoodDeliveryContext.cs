@@ -7,9 +7,10 @@ namespace FoodDeliveryAPI.Model
         public DbSet<Customer> Customers { get; set; }
         public DbSet<DeliveryVehicle> DeliveryVehicles { get; set; }
         public DbSet<DeliveryVehicleCoordinates> DeliveryVehicleCoordinates { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        public DbSet<Restaurant> Restaurants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

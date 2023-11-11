@@ -8,6 +8,6 @@
         public required string PhoneNumber { get; set;}
         public required string Coordinate { get; set; }
         public List<Order> Orders { get; set; } = new List<Order>();
-        public List<Product> ProductRestaurants { get; set; } = new List<Product>();
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

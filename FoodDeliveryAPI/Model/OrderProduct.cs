@@ -10,7 +10,7 @@ namespace FoodDeliveryAPI.Model
         public int ProductId { get; set; }
         public int Ammount { get; set; }
 
-        public List<Product> Products { get; set; } = new List<Product>();
-        public List<Order> Orders { get; set; } = new List<Order>();
+        public required Product Product { get; set; }
+        public required Order Order { get; set; }
     }
 }
