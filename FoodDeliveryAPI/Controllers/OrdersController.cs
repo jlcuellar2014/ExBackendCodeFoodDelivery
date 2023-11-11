@@ -18,6 +18,11 @@ namespace FoodDeliveryAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrderAsync(CreateOrderDto order)
         {
+            if (order == null)
+            {
+                return BadRequest("Invalid Payload");
+            }
+
             await ordersService.CreateOrderAsync(order);
             return Ok();
         }
@@ -31,6 +36,12 @@ namespace FoodDeliveryAPI.Controllers
             }
 
             CoordinateDto coordinate = await ordersService.GetOrderCoordinateAsync(trackingNumber);
+
+            if(coordinate == null)
+            {
+                return BadRequest($"No Coordinate found for the Traking Number {trackingNumber}");
+            }
+
             return Ok(coordinate);
         }
     }
