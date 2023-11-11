@@ -28,14 +28,14 @@ namespace FoodDeliveryAPI.Controllers
         }
 
         [HttpGet("{trackingNumber}/coordinate")]
-        public async Task<ActionResult<CoordinateDto>> GetOrderCoordinateAsync(string trackingNumber)
+        public async Task<ActionResult<Coordinate>> GetOrderCoordinateAsync(string trackingNumber)
         {
             if (string.IsNullOrEmpty(trackingNumber))
             {
                 throw new ArgumentException("Invalid Traking Number");
             }
 
-            CoordinateDto coordinate = await ordersService.GetOrderCoordinateAsync(trackingNumber);
+            Coordinate coordinate = await ordersService.GetOrderCoordinateAsync(trackingNumber);
 
             if(coordinate == null)
             {

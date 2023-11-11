@@ -9,10 +9,10 @@ namespace FoodDeliveryAPI.Services
             await Task.Delay(100);
         }
 
-        public async Task<CoordinateDto> GetOrderCoordinateAsync(string trackingNumber)
+        public async Task<Coordinate> GetOrderCoordinateAsync(string trackingNumber)
         {
             await Task.Delay(100);
-            return new CoordinateDto { Latitude = 10.10d, Longitude = 12.74d };
+            return new Coordinate { Latitude = 10.10d, Longitude = 12.74d };
         }
     }
 }

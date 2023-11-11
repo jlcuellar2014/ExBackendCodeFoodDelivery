@@ -16,7 +16,7 @@ namespace FoodDeliveryAPI.Controllers
         }
 
         [HttpPatch("{deliveryVehicleId}/coordinate")]
-        public async Task<ActionResult> UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, CoordinateDto coordinate)
+        public async Task<ActionResult> UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, Coordinate coordinate)
         {
 
             if (string.IsNullOrEmpty(deliveryVehicleId))
@@ -34,14 +34,14 @@ namespace FoodDeliveryAPI.Controllers
         }
 
         [HttpGet("{deliveryVehicleId}/coordinate")]
-        public async Task<ActionResult<CoordinateDto>> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId)
+        public async Task<ActionResult<Coordinate>> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId)
         {
             if (string.IsNullOrEmpty(deliveryVehicleId))
             {
                 throw new ArgumentException("Invalid Vehicle Identification");
             }
 
-            CoordinateDto coordinate = await vehiclesService.GetDeliveryVehicleCoordinateAsync(deliveryVehicleId);
+            Coordinate coordinate = await vehiclesService.GetDeliveryVehicleCoordinateAsync(deliveryVehicleId);
 
             if (coordinate == null)
             {

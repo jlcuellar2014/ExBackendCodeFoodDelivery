@@ -5,6 +5,6 @@ namespace FoodDeliveryAPI.Services
     public interface IOrdersService
     {
         Task CreateOrderAsync(CreateOrderDto order);
-        Task<CoordinateDto> GetOrderCoordinateAsync(string trackingNumber);
+        Task<Coordinate> GetOrderCoordinateAsync(string trackingNumber);
     }
 }
