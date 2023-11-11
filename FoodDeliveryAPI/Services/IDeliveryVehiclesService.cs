@@ -6,7 +6,7 @@ namespace FoodDeliveryAPI.Services
     {
         Task CreateDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId);
         Task DeleteDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId);
-        Task<Coordinate> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId);
-        Task UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, Coordinate coordinate);
+        Task<CoordinateDto> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId);
+        Task UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, CoordinateDto coordinate);
     }
 }

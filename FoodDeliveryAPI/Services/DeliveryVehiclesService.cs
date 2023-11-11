@@ -4,15 +4,15 @@ namespace FoodDeliveryAPI.Services
 {
     public class DeliveryVehiclesService : IDeliveryVehiclesService
     {
-        public async Task UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, Coordinate coordinate)
+        public async Task UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, CoordinateDto coordinate)
         {
             await Task.Delay(100);
         }
 
-        public async Task<Coordinate> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId)
+        public async Task<CoordinateDto> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId)
         {
             await Task.Delay(100);
-            return new Coordinate { Latitude = 45.25, Longitude = 84.35 };
+            return new CoordinateDto { Latitude = 45.25, Longitude = 84.35 };
         }
 
         public async Task CreateDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId)
