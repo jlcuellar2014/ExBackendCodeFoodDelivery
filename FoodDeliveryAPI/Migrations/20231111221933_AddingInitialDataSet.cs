@@ -79,7 +79,7 @@ namespace FoodDeliveryAPI.Migrations
                 columns: new[] { "OrderId", "CustomerId", "RestaurantId", "DeliveryVehicleId", "CreatedDate", "TrackingNumber", "SpecialInstructions", "OrderStatus" },
                 values: new object[,]
                 {
-                     {1, 1, 1, 1, new DateTime(2023, 11, 11, 10, 0, 0), new Guid().ToString(), "Dejar con el portero del edificio", (int)OrderStatus.OnTheWay },
+                     {1, 1, 1, 1, new DateTime(2023, 11, 11, 10, 0, 0), Guid.NewGuid().ToString(), "Dejar con el portero del edificio", (int)OrderStatus.OnTheWay },
                 }
             );
 
