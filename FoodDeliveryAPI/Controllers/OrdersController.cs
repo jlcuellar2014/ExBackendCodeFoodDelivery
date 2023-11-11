@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryAPI.Dtos;
+using FoodDeliveryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDeliveryAPI.Controllers
@@ -7,16 +8,30 @@ namespace FoodDeliveryAPI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        [HttpPost]
-        public ActionResult CreateOrder(CreateOrderDto order)
+        private readonly IOrdersService ordersService;
+
+        public OrdersController(IOrdersService ordersService)
         {
-            throw new NotImplementedException();
+            this.ordersService = ordersService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateOrderAsync(CreateOrderDto order)
+        {
+            await ordersService.CreateOrderAsync(order);
+            return Ok();
         }
 
         [HttpGet("{trackingNumber}/coordinate")]
-        public ActionResult<CoordinateDto> GetOrderCoordinate(string trackingNumber)
+        public async Task<ActionResult<CoordinateDto>> GetOrderCoordinateAsync(string trackingNumber)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(trackingNumber))
+            {
+                throw new ArgumentException("Invalid Traking Number");
+            }
+
+            CoordinateDto coordinate = await ordersService.GetOrderCoordinateAsync(trackingNumber);
+            return Ok(coordinate);
         }
     }
 }
