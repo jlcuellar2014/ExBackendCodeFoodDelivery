@@ -9,7 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// App Services
 builder.Services.AddScoped<IOrdersService, OrdersService>();
+builder.Services.AddScoped<IDeliveryVehiclesService, DeliveryVehiclesService>();
 
 var app = builder.Build();
 

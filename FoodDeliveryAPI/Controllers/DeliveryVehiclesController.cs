@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryAPI.Dtos;
+using FoodDeliveryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDeliveryAPI.Controllers
@@ -7,28 +8,39 @@ namespace FoodDeliveryAPI.Controllers
     [ApiController]
     public class DeliveryVehiclesController : ControllerBase
     {
-        [HttpPatch("{deliveryVehicleId}/coordinate")]
-        public ActionResult UpdateDeliveryVehicleCoordinate(string deliveryVehicleId, CoordinateDto coordinate)
+        private readonly IDeliveryVehiclesService vehiclesService;
+
+        public DeliveryVehiclesController(IDeliveryVehiclesService vehiclesService)
         {
-            throw new NotImplementedException();
+            this.vehiclesService = vehiclesService;
+        }
+
+        [HttpPatch("{deliveryVehicleId}/coordinate")]
+        public async Task<ActionResult> UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, CoordinateDto coordinate)
+        {
+            await vehiclesService.UpdateDeliveryVehicleCoordinateAsync(deliveryVehicleId, coordinate);
+            return Ok();
         }
 
         [HttpGet("{deliveryVehicleId}/coordinate")]
-        public ActionResult<CoordinateDto> GetDeliveryVehicleCoordinate(string deliveryVehicleId)
+        public async Task<ActionResult<CoordinateDto>> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId)
         {
-            throw new NotImplementedException();
+            CoordinateDto coordinate = await vehiclesService.GetDeliveryVehicleCoordinateAsync(deliveryVehicleId);
+            return Ok(coordinate);
         }
 
         [HttpPost("{deliveryVehicleId}/orders/{orderId}")]
-        public ActionResult CreateDeliveryVehicleOrder(string deliveryVehicleId, string orderId)
+        public async Task<ActionResult> CreateDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId)
         {
-            throw new NotImplementedException();
+            await vehiclesService.CreateDeliveryVehicleOrderAsync(deliveryVehicleId.ToLower(), orderId);
+            return Ok();
         }
 
         [HttpDelete("{deliveryVehicleId}/orders/{orderId}")]
-        public ActionResult DeleteDeliveryVehicleOrder(string deliveryVehicleId, string orderId)
+        public async Task<ActionResult> DeleteDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId)
         {
-            throw new NotImplementedException();
+            await vehiclesService.DeleteDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
+            return Ok();
         }
     }
 }
