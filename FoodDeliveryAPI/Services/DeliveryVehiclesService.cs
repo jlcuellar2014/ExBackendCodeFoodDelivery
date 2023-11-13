@@ -10,7 +10,6 @@ namespace FoodDeliveryAPI.Services
         public DeliveryVehiclesService()
         {
             dbContext = new FoodDeliveryContext();
-
         }
 
         public async Task UpdateDeliveryVehicleCoordinateAsync(int deliveryVehicleId, CoordinateDto coordinate)
@@ -19,7 +18,8 @@ namespace FoodDeliveryAPI.Services
 
             var vehicle = await dbContext.DeliveryVehicles.FindAsync(deliveryVehicleId);
 
-            if (vehicle == null) {
+            if (vehicle == null)
+            {
                 throw new Exception($"No Delivery Vehicle found with the ID  {deliveryVehicleId}");
             }
 
@@ -37,18 +37,40 @@ namespace FoodDeliveryAPI.Services
 
         public async Task<CoordinateDto> GetDeliveryVehicleCoordinateAsync(int deliveryVehicleId)
         {
-            await Task.Delay(100);
-            return new CoordinateDto { Latitude = 45.25, Longitude = 84.35 };
+            var vehicle = await dbContext.DeliveryVehicles.FindAsync(deliveryVehicleId);
+
+            if (vehicle == null)
+            {
+                throw new Exception($"No Delivery Vehicle found with the ID  {deliveryVehicleId}");
+            }
+
+            return new CoordinateDto(vehicle.Coordinate);
         }
 
         public async Task CreateDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
         {
-            await Task.Delay(100);
+            var order = await dbContext.Orders.FindAsync(orderId);
+            
+            if(order == null)
+            {
+                throw new Exception($"No Order found with the ID  {orderId}");
+            }
+
+            order.DeliveryVehicleId = deliveryVehicleId;
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
         {
-            await Task.Delay(100);
+            var order = await dbContext.Orders.FindAsync(orderId);
+
+            if (order == null)
+            {
+                throw new Exception($"No Order found with the ID  {orderId}");
+            }
+
+            order.DeliveryVehicleId = null;
+            await dbContext.SaveChangesAsync();
         }
     }
 }

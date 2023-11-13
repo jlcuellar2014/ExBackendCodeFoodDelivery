@@ -56,8 +56,6 @@ namespace FoodDeliveryAPI.Services
             string? coordinate;
             var order = await dbContext.Orders.FirstOrDefaultAsync(o => o.TrackingNumber.Equals(trackingNumber));
 
-            // FIXME - Make a better use of the exceptions here!
-
             if (order == null)
             {
                 throw new Exception($"No Order with the TrackingNumber {trackingNumber} was found");
