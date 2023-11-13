@@ -92,18 +92,7 @@ namespace FoodDeliveryAPI.Services
                                    .FirstOrDefaultAsync<string>();
             }
 
-            if (coordinate == null)
-            {
-                throw new Exception("The Order no has Coordinate assigned");
-            }
-
-            string[] aux = coordinate.Split(',');
-
-            return new CoordinateDto
-            {
-                Latitude = double.TryParse(aux[0].Trim(), out double latitude) ? latitude : 0,
-                Longitude = double.TryParse(aux[1].Trim(), out double longitude) ? longitude : 0
-            };
+            return new CoordinateDto(coordinate ?? string.Empty);
         }
     }
 }
