@@ -23,8 +23,15 @@ namespace FoodDeliveryAPI.Controllers
                 return BadRequest("Invalid Payload");
             }
 
-            await ordersService.CreateOrderAsync(order);
-            return Ok();
+            try
+            {
+                await ordersService.CreateOrderAsync(order);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{trackingNumber}/coordinate")]
