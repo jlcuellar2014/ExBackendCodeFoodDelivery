@@ -2,7 +2,7 @@
 {
     public class CreateOrderProductDto
     {
-        public required string ProductId { get; set; }
-        public required int Amount { get; set; }
+        public required int ProductId { get; set; }
+        public int Amount { get; set; } = 1;
     }
 }
