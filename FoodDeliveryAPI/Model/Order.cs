@@ -10,8 +10,8 @@
         public string TrackingNumber { get; set; } = Guid.NewGuid().ToString();
         public string SpecialInstructions {  get; set; } = string.Empty;
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
-        public required Customer Customer { get; set; }
-        public required Restaurant Restaurant { get; set; }
-        public required OrderProduct OrderProduct { get; set;}
+        public Customer? Customer { get; set; }
+        public Restaurant? Restaurant { get; set; }
+        public OrderProduct? OrderProduct { get; set;}
     }
 }

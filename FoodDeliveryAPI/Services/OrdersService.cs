@@ -14,7 +14,41 @@ namespace FoodDeliveryAPI.Services
 
         public async Task CreateOrderAsync(CreateOrderDto order)
         {
-            await Task.Delay(100);
+            var newOrderProducts = new List<OrderProduct>();
+            var newOrder = new Order
+            {
+                CustomerId = order.CustomerId,
+                RestaurantId = order.RestaurantId,
+                SpecialInstructions = order.SpecialInstructions ?? string.Empty,
+            };
+
+            foreach (var p in order.Products)
+            {
+                newOrderProducts.Add(new OrderProduct
+                {
+                    OrderId = newOrder.OrderId,
+                    ProductId = p.ProductId,
+                    Ammount = p.Amount,
+                    Order = newOrder
+                });
+            }
+
+            // Verifying that the products correspond to the restaurant of the order
+            var auxIdProducts = from p in newOrderProducts
+                                select p.ProductId;
+
+            var badRestaurantProductRelationship = await dbContext.Products
+                                   .AnyAsync(
+                                        p => auxIdProducts.Contains(p.ProductId)
+                                        && !p.RestaurantId.Equals(order.RestaurantId));
+
+            if (badRestaurantProductRelationship)
+            {
+                throw new Exception("Some products in the order, do not correspond to the restaurant used in the order");
+            }
+
+            await dbContext.OrderProducts.AddRangeAsync(newOrderProducts);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<CoordinateDto> GetOrderCoordinateAsync(string trackingNumber)

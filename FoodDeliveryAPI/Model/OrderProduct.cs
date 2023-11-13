@@ -8,9 +8,9 @@ namespace FoodDeliveryAPI.Model
         public int OrderId { get; set; }
         [Key]
         public int ProductId { get; set; }
-        public int Ammount { get; set; }
+        public int Ammount { get; set; } = 1;
 
-        public required Product Product { get; set; }
-        public required Order Order { get; set; }
+        public Product? Product { get; set; }
+        public Order? Order { get; set; }
     }
 }
