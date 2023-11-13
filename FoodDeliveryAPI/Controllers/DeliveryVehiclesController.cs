@@ -16,73 +16,70 @@ namespace FoodDeliveryAPI.Controllers
         }
 
         [HttpPatch("{deliveryVehicleId}/coordinate")]
-        public async Task<ActionResult> UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, CoordinateDto coordinate)
+        public async Task<ActionResult> UpdateDeliveryVehicleCoordinateAsync(int deliveryVehicleId, CoordinateDto coordinate)
         {
-
-            if (string.IsNullOrEmpty(deliveryVehicleId))
-            {
-                throw new ArgumentException("Invalid Vehicle Identification");
-            }
-
             if (coordinate == null)
             {
                 return BadRequest("Invalid Payload");
             }
 
-            await vehiclesService.UpdateDeliveryVehicleCoordinateAsync(deliveryVehicleId, coordinate);
-            return Ok();
+            try
+            {
+                await vehiclesService.UpdateDeliveryVehicleCoordinateAsync(deliveryVehicleId, coordinate);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{deliveryVehicleId}/coordinate")]
-        public async Task<ActionResult<CoordinateDto>> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId)
+        public async Task<ActionResult<CoordinateDto>> GetDeliveryVehicleCoordinateAsync(int deliveryVehicleId)
         {
-            if (string.IsNullOrEmpty(deliveryVehicleId))
+            try
             {
-                throw new ArgumentException("Invalid Vehicle Identification");
+                var coordinate = await vehiclesService.GetDeliveryVehicleCoordinateAsync(deliveryVehicleId);
+
+                if (coordinate == null)
+                {
+                    return BadRequest($"No Coordinate found for the Vehicle Identification {deliveryVehicleId}");
+                }
+
+                return Ok(coordinate);
             }
-
-            var coordinate = await vehiclesService.GetDeliveryVehicleCoordinateAsync(deliveryVehicleId);
-
-            if (coordinate == null)
+            catch (Exception)
             {
-                return BadRequest($"No Coordinate found for the Vehicle Identification {deliveryVehicleId}");
+                return BadRequest();
             }
-
-            return Ok(coordinate);
         }
 
         [HttpPost("{deliveryVehicleId}/orders/{orderId}")]
-        public async Task<ActionResult> CreateDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId)
+        public async Task<ActionResult> CreateDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
         {
-            if (string.IsNullOrEmpty(deliveryVehicleId))
+            try
             {
-                throw new ArgumentException("Invalid Vehicle Identification");
-            } 
-            
-            if (string.IsNullOrEmpty(orderId))
-            {
-                throw new ArgumentException("Invalid Order Identification");
+                await vehiclesService.CreateDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
+                return Ok();
             }
-
-            await vehiclesService.CreateDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
-            return Ok();
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{deliveryVehicleId}/orders/{orderId}")]
-        public async Task<ActionResult> DeleteDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId)
+        public async Task<ActionResult> DeleteDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
         {
-            if (string.IsNullOrEmpty(deliveryVehicleId))
+            try
             {
-                throw new ArgumentException("Invalid Vehicle Identification");
+                await vehiclesService.DeleteDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
+                return Ok();
             }
-
-            if (string.IsNullOrEmpty(orderId))
+            catch (Exception)
             {
-                throw new ArgumentException("Invalid Order Identification");
+                return BadRequest();
             }
-
-            await vehiclesService.DeleteDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
-            return Ok();
         }
     }
 }

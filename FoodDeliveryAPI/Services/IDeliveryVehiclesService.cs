@@ -4,9 +4,9 @@ namespace FoodDeliveryAPI.Services
 {
     public interface IDeliveryVehiclesService
     {
-        Task CreateDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId);
-        Task DeleteDeliveryVehicleOrderAsync(string deliveryVehicleId, string orderId);
-        Task<CoordinateDto> GetDeliveryVehicleCoordinateAsync(string deliveryVehicleId);
-        Task UpdateDeliveryVehicleCoordinateAsync(string deliveryVehicleId, CoordinateDto coordinate);
+        Task CreateDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId);
+        Task DeleteDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId);
+        Task<CoordinateDto> GetDeliveryVehicleCoordinateAsync(int deliveryVehicleId);
+        Task UpdateDeliveryVehicleCoordinateAsync(int deliveryVehicleId, CoordinateDto coordinate);
     }
 }
