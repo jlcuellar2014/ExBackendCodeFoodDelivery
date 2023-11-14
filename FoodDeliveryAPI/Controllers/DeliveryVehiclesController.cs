@@ -1,9 +1,11 @@
 ﻿using FoodDeliveryAPI.Dtos;
 using FoodDeliveryAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDeliveryAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DeliveryVehiclesController : ControllerBase

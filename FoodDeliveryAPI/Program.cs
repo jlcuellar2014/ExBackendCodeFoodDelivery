@@ -1,4 +1,7 @@
 using FoodDeliveryAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,20 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IDeliveryVehiclesService, DeliveryVehiclesService>();
 
+// Adding Security
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("JwtSettings:SecretKey") ?? string.Empty))
+            };
+        });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +41,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Adding Security
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
