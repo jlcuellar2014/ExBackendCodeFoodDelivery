@@ -2,8 +2,7 @@
 {
     public class CoordinateDto
     {
-        private double latitude;
-        private double longitude;
+        public CoordinateDto() { }
 
         public CoordinateDto(string coordinateString)
         {
@@ -25,7 +24,7 @@
             }
         }
 
-        public double Latitude { get => latitude; set => latitude = value; }
-        public double Longitude { get => longitude; set => longitude = value; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }
