@@ -28,5 +28,11 @@ namespace FoodDeliveryTests.Model
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(o => new { o.OrderId, o.ProductId });
         }
+
+        public override void Dispose()
+        {
+            this.Database.EnsureDeleted();
+            base.Dispose();
+        }
     }
 }
