@@ -14,6 +14,12 @@ namespace FoodDeliveryAPI.Services
 
         public async Task CreateOrderAsync(CreateOrderDto order)
         {
+            if (order == null)
+                throw new ArgumentNullException(nameof(order));
+
+            if (order.Products == null)
+                throw new ArgumentNullException(nameof(order.Products));
+
             var newOrderProducts = new List<OrderProduct>();
             var newOrder = new Order
             {
@@ -38,14 +44,12 @@ namespace FoodDeliveryAPI.Services
                                 select p.ProductId;
 
             var badRestaurantProductRelationship = await dbContext.Products
-                                   .AnyAsync(
-                                        p => auxIdProducts.Contains(p.ProductId)
-                                        && !p.RestaurantId.Equals(order.RestaurantId));
+                                                 .AnyAsync(
+                                                      p => auxIdProducts.Contains(p.ProductId)
+                                                      && !p.RestaurantId.Equals(order.RestaurantId));
 
             if (badRestaurantProductRelationship)
-            {
-                throw new Exception("Some products in the order, do not correspond to the restaurant used in the order");
-            }
+                throw new ArgumentException("Some products in the order, do not correspond to the restaurant used in the order");
 
             await dbContext.OrderProducts.AddRangeAsync(newOrderProducts);
             await dbContext.SaveChangesAsync();
