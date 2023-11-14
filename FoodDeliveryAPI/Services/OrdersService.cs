@@ -14,7 +14,12 @@ namespace FoodDeliveryAPI.Services
 
         public async Task CreateOrderAsync(CreateOrderDto order)
         {
-            var newOrderProducts = new List<OrderProduct>();
+            if (order == null)
+                throw new ArgumentNullException(nameof(order));
+
+            if (order.Products == null)
+                throw new ArgumentNullException(nameof(order.Products));
+
             var newOrder = new Order
             {
                 CustomerId = order.CustomerId,
@@ -22,6 +27,7 @@ namespace FoodDeliveryAPI.Services
                 SpecialInstructions = order.SpecialInstructions ?? string.Empty,
             };
 
+            var newOrderProducts = new List<OrderProduct>();
             foreach (var p in order.Products)
             {
                 newOrderProducts.Add(new OrderProduct
@@ -37,15 +43,13 @@ namespace FoodDeliveryAPI.Services
             var auxIdProducts = from p in newOrderProducts
                                 select p.ProductId;
 
-            var badRestaurantProductRelationship = await dbContext.Products
-                                   .AnyAsync(
-                                        p => auxIdProducts.Contains(p.ProductId)
-                                        && !p.RestaurantId.Equals(order.RestaurantId));
+            var goodRestaurantProductRelationship = auxIdProducts
+                .All(idProduct => dbContext.Products
+                        .Any(p => p.ProductId.Equals(idProduct) &&
+                                  p.RestaurantId.Equals(order.RestaurantId)));
 
-            if (badRestaurantProductRelationship)
-            {
-                throw new Exception("Some products in the order, do not correspond to the restaurant used in the order");
-            }
+            if (!goodRestaurantProductRelationship)
+                throw new ArgumentException("Some products in the order, do not correspond to the restaurant used in the order");
 
             await dbContext.OrderProducts.AddRangeAsync(newOrderProducts);
             await dbContext.SaveChangesAsync();

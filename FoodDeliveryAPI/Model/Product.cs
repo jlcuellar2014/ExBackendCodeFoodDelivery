@@ -7,6 +7,7 @@
         public required string ProductName { get; set; }
         public string ProductDescription { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public required Restaurant Restaurant { get; set; }
+        public Restaurant? Restaurant { get; set; }
+        public List<OrderProduct>? OrderProducts { get; set; }
     }
 }

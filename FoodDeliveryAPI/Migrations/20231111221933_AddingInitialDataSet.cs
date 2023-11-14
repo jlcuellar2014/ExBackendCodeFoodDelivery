@@ -70,7 +70,7 @@ namespace FoodDeliveryAPI.Migrations
                      {6, 2, "Capricho Alicantino", "", 10m },
                      {7, 2, "Berberechos XXL", "", 13m },
                      {8, 3, "American Burguer", "Deliciosos 200g de carne 100% Black Angus con lechuga, tomate y queso chedar fundido", 10.90m },
-                     {10, 4, "Menú del Día", "Puede elegir un primer plato de entre tres opciones y un segundo de entre otras tres opciones", 25m },
+                     {9, 4, "Menú del Día", "Puede elegir un primer plato de entre tres opciones y un segundo de entre otras tres opciones", 25m },
                 }
             );
 
