@@ -2,7 +2,7 @@
 
 namespace FoodDeliveryAPI.Model
 {
-    public class FoodDeliveryContext : DbContext
+    public class FoodDeliveryContext : DbContext, IFoodDeliveryContext
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<DeliveryVehicle> DeliveryVehicles { get; set; }
@@ -11,6 +11,11 @@ namespace FoodDeliveryAPI.Model
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public async Task SaveChangesAsync()
+        {
+            await base.SaveChangesAsync();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

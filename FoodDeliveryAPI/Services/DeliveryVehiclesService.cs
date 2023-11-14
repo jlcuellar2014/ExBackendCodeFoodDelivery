@@ -5,11 +5,11 @@ namespace FoodDeliveryAPI.Services
 {
     public class DeliveryVehiclesService : IDeliveryVehiclesService
     {
-        private readonly FoodDeliveryContext dbContext;
+        private readonly IFoodDeliveryContext dbContext;
 
-        public DeliveryVehiclesService()
+        public DeliveryVehiclesService(IFoodDeliveryContext dbContext)
         {
-            dbContext = new FoodDeliveryContext();
+            this.dbContext = dbContext;
         }
 
         public async Task UpdateDeliveryVehicleCoordinateAsync(int deliveryVehicleId, CoordinateDto coordinate)
@@ -50,8 +50,8 @@ namespace FoodDeliveryAPI.Services
         public async Task CreateDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
         {
             var order = await dbContext.Orders.FindAsync(orderId);
-            
-            if(order == null)
+
+            if (order == null)
             {
                 throw new Exception($"No Order found with the ID  {orderId}");
             }
