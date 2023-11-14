@@ -41,7 +41,7 @@ namespace FoodDeliveryAPI.Services
 
             if (vehicle == null)
             {
-                throw new Exception($"No Delivery Vehicle found with the ID  {deliveryVehicleId}");
+                throw new ArgumentException($"No Delivery Vehicle found with the ID  {deliveryVehicleId}");
             }
 
             return new CoordinateDto(vehicle.Coordinate);
@@ -53,7 +53,7 @@ namespace FoodDeliveryAPI.Services
 
             if (order == null)
             {
-                throw new Exception($"No Order found with the ID  {orderId}");
+                throw new ArgumentException($"No Order found with the ID  {orderId}");
             }
 
             order.DeliveryVehicleId = deliveryVehicleId;
@@ -66,7 +66,7 @@ namespace FoodDeliveryAPI.Services
 
             if (order == null)
             {
-                throw new Exception($"No Order found with the ID  {orderId}");
+                throw new ArgumentException($"No Order found with the ID  {orderId}");
             }
 
             order.DeliveryVehicleId = null;
