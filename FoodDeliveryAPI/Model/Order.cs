@@ -12,6 +12,6 @@
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
         public Customer? Customer { get; set; }
         public Restaurant? Restaurant { get; set; }
-        public OrderProduct? OrderProduct { get; set;}
+        public List<OrderProduct>? OrderProducts { get; set; }
     }
 }
