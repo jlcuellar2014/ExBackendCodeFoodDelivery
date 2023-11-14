@@ -1,3 +1,4 @@
+using FoodDeliveryAPI.Model;
 using FoodDeliveryAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// App DbContext
+builder.Services.AddScoped<IFoodDeliveryContext, FoodDeliveryContext>();
 // App Services
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IDeliveryVehiclesService, DeliveryVehiclesService>();

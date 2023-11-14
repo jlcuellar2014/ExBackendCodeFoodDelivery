@@ -6,10 +6,10 @@ namespace FoodDeliveryAPI.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly FoodDeliveryContext dbContext;
-        public OrdersService()
+        private readonly IFoodDeliveryContext dbContext;
+        public OrdersService(IFoodDeliveryContext dbContext)
         {
-            dbContext = new FoodDeliveryContext();
+            this.dbContext = dbContext;
         }
 
         public async Task CreateOrderAsync(CreateOrderDto order)
