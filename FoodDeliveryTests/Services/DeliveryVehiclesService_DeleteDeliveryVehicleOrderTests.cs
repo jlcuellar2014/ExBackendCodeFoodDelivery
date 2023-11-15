@@ -1,7 +1,6 @@
 ﻿using FoodDeliveryAPI.Model;
 using FoodDeliveryAPI.Services;
 using FoodDeliveryTests.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryTests.Services
 {
@@ -21,7 +20,7 @@ namespace FoodDeliveryTests.Services
             await dbContext.SaveChangesAsync();
 
             // Act
-            await deliveryService.CreateDeliveryVehicleOrderAsync(1, 1);
+            deliveryService.CreateDeliveryVehicleOrder(1, 1);
 
             // Assert
             var updatedOrder = await dbContext.Orders.FindAsync(1);
@@ -37,7 +36,7 @@ namespace FoodDeliveryTests.Services
             var deliveryService = new DeliveryVehiclesService(dbContext);
 
             // Act & Assert
-            Assert.ThrowsAsync<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrderAsync(1, 1));
+            Assert.Throws<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrder(1, 1));
         }
 
         [Test]
@@ -52,7 +51,7 @@ namespace FoodDeliveryTests.Services
             await dbContext.SaveChangesAsync();
 
             // Act & Assert
-            Assert.ThrowsAsync<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrderAsync(1, 2));
+            Assert.Throws<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrder(1, 2));
         }
     }
 }

@@ -57,11 +57,11 @@ namespace FoodDeliveryAPI.Controllers
         }
 
         [HttpPost("{deliveryVehicleId}/orders/{orderId}")]
-        public async Task<ActionResult> CreateDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
+        public ActionResult CreateDeliveryVehicleOrder(int deliveryVehicleId, int orderId)
         {
             try
             {
-                await vehiclesService.CreateDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
+                vehiclesService.CreateDeliveryVehicleOrder(deliveryVehicleId, orderId);
                 return Ok();
             }
             catch (Exception)

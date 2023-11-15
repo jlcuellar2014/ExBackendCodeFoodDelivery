@@ -13,10 +13,8 @@ namespace FoodDeliveryTests.Model
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
-        public async Task SaveChangesAsync()
-        {
-            await base.SaveChangesAsync();
-        }
+        public override int SaveChanges() => base.SaveChanges();
+        public async Task SaveChangesAsync() => await base.SaveChangesAsync();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

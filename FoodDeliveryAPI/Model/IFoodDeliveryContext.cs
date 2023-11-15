@@ -12,6 +12,7 @@ namespace FoodDeliveryAPI.Model
         DbSet<Product> Products { get; set; }
         DbSet<Restaurant> Restaurants { get; set; }
 
+        int SaveChanges();
         Task SaveChangesAsync();
     }
 }

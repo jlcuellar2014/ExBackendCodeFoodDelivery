@@ -1,6 +1,7 @@
 ﻿using FoodDeliveryAPI.Model;
 using FoodDeliveryAPI.Services;
 using FoodDeliveryTests.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryTests.Services
 {
@@ -20,7 +21,7 @@ namespace FoodDeliveryTests.Services
             await dbContext.SaveChangesAsync();
 
             // Act
-            await deliveryService.CreateDeliveryVehicleOrderAsync(1, 1);
+            deliveryService.CreateDeliveryVehicleOrder(1, 1);
 
             // Assert
             var updatedOrder = await dbContext.Orders.FindAsync(1);
@@ -37,7 +38,8 @@ namespace FoodDeliveryTests.Services
             var deliveryService = new DeliveryVehiclesService(dbContext);
 
             // Act & Assert
-            Assert.ThrowsAsync<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrderAsync(1, 1));
+            Assert.Throws<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrder(1, 1));
+
         }
 
         [Test]
@@ -52,7 +54,22 @@ namespace FoodDeliveryTests.Services
             await dbContext.SaveChangesAsync();
 
             // Act & Assert
-            Assert.ThrowsAsync<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrderAsync(1, 2));
+            Assert.Throws<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrder(1, 2));
+        }
+
+        [Test]
+        public void CreateDeliveryVehicleOrder_OrderAlreadyAssigned_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            using var dbContext = new FakeDbContext();
+            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var order = new Order { OrderId = 1, DeliveryVehicleId = 2 };
+           
+            dbContext.Orders.Add(order);
+            dbContext.SaveChanges();
+
+            // Act & Assert
+            Assert.Throws<InvalidOperationException>(() => deliveryService.CreateDeliveryVehicleOrder(1, 1));
         }
     }
 }
