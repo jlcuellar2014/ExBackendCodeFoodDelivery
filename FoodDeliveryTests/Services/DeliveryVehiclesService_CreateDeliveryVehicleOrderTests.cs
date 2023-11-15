@@ -1,6 +1,7 @@
 ﻿using FoodDeliveryAPI.Model;
 using FoodDeliveryAPI.Services;
 using FoodDeliveryTests.Model;
+using FoodDeliveryTests.Publishers;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryTests.Services
@@ -14,7 +15,7 @@ namespace FoodDeliveryTests.Services
         {
             // Arrange
             using var dbContext = new FakeDbContext();
-            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var deliveryService = new DeliveryVehiclesService(dbContext, new FakePublisher());
             var order = new Order { OrderId = 1 };
 
             dbContext.Orders.Add(order);
@@ -35,7 +36,7 @@ namespace FoodDeliveryTests.Services
         {
             // Arrange
             using var dbContext = new FakeDbContext();
-            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var deliveryService = new DeliveryVehiclesService(dbContext, new FakePublisher());
 
             // Act & Assert
             Assert.Throws<ArgumentException>(() => deliveryService.CreateDeliveryVehicleOrder(1, 1));
@@ -47,7 +48,7 @@ namespace FoodDeliveryTests.Services
         {
             // Arrange
             using var dbContext = new FakeDbContext();
-            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var deliveryService = new DeliveryVehiclesService(dbContext, new FakePublisher());
             var order = new Order { OrderId = 1 };
 
             dbContext.Orders.Add(order);
@@ -62,7 +63,7 @@ namespace FoodDeliveryTests.Services
         {
             // Arrange
             using var dbContext = new FakeDbContext();
-            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var deliveryService = new DeliveryVehiclesService(dbContext, new FakePublisher());
             var order = new Order { OrderId = 1, DeliveryVehicleId = 2 };
            
             dbContext.Orders.Add(order);

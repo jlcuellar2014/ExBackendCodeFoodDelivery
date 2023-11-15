@@ -1,4 +1,5 @@
 using FoodDeliveryAPI.Model;
+using FoodDeliveryAPI.Publishers;
 using FoodDeliveryAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,10 @@ builder.Services.AddSwaggerGen();
 
 // App DbContext
 builder.Services.AddScoped<IFoodDeliveryContext, FoodDeliveryContext>();
+
+// Msg Publisher
+builder.Services.AddScoped<IMsgPublisher, RabbitMqPublisher>();
+
 // App Services
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IDeliveryVehiclesService, DeliveryVehiclesService>();

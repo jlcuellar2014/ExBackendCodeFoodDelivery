@@ -1,15 +1,18 @@
 ﻿using FoodDeliveryAPI.Dtos;
 using FoodDeliveryAPI.Model;
+using FoodDeliveryAPI.Publishers;
 
 namespace FoodDeliveryAPI.Services
 {
     public class DeliveryVehiclesService : IDeliveryVehiclesService
     {
         private readonly IFoodDeliveryContext dbContext;
+        private readonly IMsgPublisher msgPublisher;
 
-        public DeliveryVehiclesService(IFoodDeliveryContext dbContext)
+        public DeliveryVehiclesService(IFoodDeliveryContext dbContext, IMsgPublisher msgPublisher)
         {
             this.dbContext = dbContext;
+            this.msgPublisher = msgPublisher;
         }
 
         public async Task UpdateDeliveryVehicleCoordinateAsync(int deliveryVehicleId, CoordinateDto coordinate)
@@ -26,13 +29,23 @@ namespace FoodDeliveryAPI.Services
             vehicle.Coordinate = auxCoordinate;
 
             // Save the historical of the coordinates
-            await dbContext.DeliveryVehicleCoordinates.AddAsync(new DeliveryVehicleCoordinates
+            var newDeliveryVehicleCoordinate = new DeliveryVehicleCoordinates
             {
                 Coordinate = vehicle.Coordinate,
                 DeliveryVehicle = vehicle
-            });
+            };
+
+            await dbContext.DeliveryVehicleCoordinates.AddAsync(newDeliveryVehicleCoordinate);
 
             await dbContext.SaveChangesAsync();
+
+            msgPublisher.PublishDeliveryVehicheMovedEvent(
+                new DeliveryVehicleMovedDto
+                {
+                    Coordinate = newDeliveryVehicleCoordinate.Coordinate,
+                    DeliveryVehicleId = newDeliveryVehicleCoordinate.DeliveryVehicleId,
+                    DateTime = newDeliveryVehicleCoordinate.DateTime
+                });
         }
 
         public async Task<CoordinateDto> GetDeliveryVehicleCoordinateAsync(int deliveryVehicleId)

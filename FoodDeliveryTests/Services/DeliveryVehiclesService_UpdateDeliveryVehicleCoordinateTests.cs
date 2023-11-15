@@ -2,6 +2,7 @@
 using FoodDeliveryAPI.Model;
 using FoodDeliveryAPI.Services;
 using FoodDeliveryTests.Model;
+using FoodDeliveryTests.Publishers;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryTests.Services
@@ -14,7 +15,7 @@ namespace FoodDeliveryTests.Services
         {
             // Arrange
             using var dbContext = new FakeDbContext();
-            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var deliveryService = new DeliveryVehiclesService(dbContext, new FakePublisher());
 
             var vehicle = new DeliveryVehicle { 
                 DeliveryVehicleId = 1, 
@@ -48,7 +49,7 @@ namespace FoodDeliveryTests.Services
         {
             // Arrange
             using var dbContext = new FakeDbContext();
-            var deliveryService = new DeliveryVehiclesService(dbContext);
+            var deliveryService = new DeliveryVehiclesService(dbContext, new FakePublisher());
 
             var newCoordinate = new CoordinateDto { Latitude = 1, Longitude = 1 };
 
