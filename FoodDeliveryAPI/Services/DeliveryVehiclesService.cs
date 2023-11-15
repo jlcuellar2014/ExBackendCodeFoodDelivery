@@ -47,17 +47,25 @@ namespace FoodDeliveryAPI.Services
             return new CoordinateDto(vehicle.Coordinate);
         }
 
-        public async Task CreateDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
+        private readonly object createOrderLock = new object();
+        public void CreateDeliveryVehicleOrder(int deliveryVehicleId, int orderId)
         {
-            var order = await dbContext.Orders.FindAsync(orderId);
-
-            if (order == null)
+            lock (createOrderLock)
             {
-                throw new ArgumentException($"No Order found with the ID  {orderId}");
-            }
+                var order = dbContext.Orders.Find(orderId);
 
-            order.DeliveryVehicleId = deliveryVehicleId;
-            await dbContext.SaveChangesAsync();
+                if (order == null)
+                {
+                    throw new ArgumentException($"No Order found with the ID  {orderId}");
+                }
+
+                if (order.DeliveryVehicleId != null)
+                    throw new InvalidOperationException($"Order with ID {orderId} " +
+                        $"has already been assigned to another Delivery Vehicle with ID {order.DeliveryVehicleId}");
+
+                order.DeliveryVehicleId = deliveryVehicleId;
+                dbContext.SaveChanges();
+            }
         }
 
         public async Task DeleteDeliveryVehicleOrderAsync(int deliveryVehicleId, int orderId)
