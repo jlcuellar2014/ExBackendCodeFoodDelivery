@@ -17,11 +17,11 @@ namespace FoodDeliveryAPI.Controllers.Tests
             var orderId = 42;
 
             // Act
-            var result = await controller.CreateDeliveryVehicleOrderAsync(deliveryVehicleId, orderId);
+            var result = controller.CreateDeliveryVehicleOrder(deliveryVehicleId, orderId);
 
             // Assert
             Assert.IsInstanceOf<OkResult>(result);
-            vehiclesServiceMock.Verify(x => x.CreateDeliveryVehicleOrderAsync(deliveryVehicleId, orderId), Times.Once);
+            vehiclesServiceMock.Verify(x => x.CreateDeliveryVehicleOrder(deliveryVehicleId, orderId), Times.Once);
         }
     }
 }
