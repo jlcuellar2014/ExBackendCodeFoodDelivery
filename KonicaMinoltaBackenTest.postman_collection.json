@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "5754340a-cab8-46c5-929f-8185183d1b61",
+		"name": "KonicaMinoltaBackenTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7404597"
+	},
+	"item": [
+		{
+			"name": "CreateOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerId\": 1,\r\n  \"restaurantId\": 1,\r\n  \"specialInstructions\": \"From Postman with token\",\r\n  \"products\": [\r\n    {\r\n      \"productId\": 1,\r\n      \"amount\": 2\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44393/api/Orders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44393",
+					"path": [
+						"api",
+						"Orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Token",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Set Delivery Vehicle Coordinates",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Latitude\": 22.340316318494754,\r\n  \"Longitude\": -80.27972965860107\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44393/api/DeliveryVehicles/{{deliveryVehicleId}}/coordinate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44393",
+					"path": [
+						"api",
+						"DeliveryVehicles",
+						"{{deliveryVehicleId}}",
+						"coordinate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Delivery Vehicle Coordinates",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44393/api/DeliveryVehicles/{{deliveryVehicleId}}/coordinate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44393",
+					"path": [
+						"api",
+						"DeliveryVehicles",
+						"{{deliveryVehicleId}}",
+						"coordinate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Coordinates by Tracking Number",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44393/api/DeliveryVehicles/{{deliveryVehicleId}}/coordinate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44393",
+					"path": [
+						"api",
+						"DeliveryVehicles",
+						"{{deliveryVehicleId}}",
+						"coordinate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Order to Delivery Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44393/api/DeliveryVehicles/{{deliveryVehicleId}}/orders/{{orderId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44393",
+					"path": [
+						"api",
+						"DeliveryVehicles",
+						"{{deliveryVehicleId}}",
+						"orders",
+						"{{orderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order to Delivery Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44393/api/DeliveryVehicles/{{deliveryVehicleId}}/orders/{{orderId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44393",
+					"path": [
+						"api",
+						"DeliveryVehicles",
+						"{{deliveryVehicleId}}",
+						"orders",
+						"{{orderId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkpvcmdlIEx1aXMgQ3VlbGxhciBNb25kZWphIiwiZW1haWwiOiJqbGN1ZWxsYXJtb25kZWphQGdtYWlsLmNvbSIsIm5iZiI6MTcwMDAwMjg3NywiZXhwIjoxNzAwNDM0ODc3LCJpYXQiOjE3MDAwMDI4Nzd9.kfzMqlFSy3JsdN17XkoU6D7rEN4nHTudixaDwaIzktA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "deliveryVehicleId",
+			"value": "1"
+		},
+		{
+			"key": "orderId",
+			"value": "1"
+		},
+		{
+			"key": "trackingNumber",
+			"value": "00000000-0000-0000-0000-000000000000"
+		}
+	]
+}
